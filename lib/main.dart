@@ -49,7 +49,6 @@ class _MyHomePageState extends State<MyHomePage> {
           children: [
             Row(
               children: [
-
                 Expanded(
                   child: TextField(
                     controller: N,
@@ -84,7 +83,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
                 Expanded(
                   child: TextField(
-                    controller:K ,
+                    controller: K,
                     decoration: InputDecoration(
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(16),
@@ -178,21 +177,13 @@ class _MyHomePageState extends State<MyHomePage> {
             Row(
               children: [
                 Expanded(
-                    child:
-                        ElevatedButton(onPressed: () {
- /*                         final N = TextEditingController();
-                          final M = TextEditingController();
-                          final K = TextEditingController();
-                          final a = TextEditingController();
-                          final b = TextEditingController();
-                          final c = TextEditingController();
-                          final d = TextEditingController();*/
+                    child: ElevatedButton(
+                        onPressed: () {
                           Calcs calcs = new Calcs();
-                          calcs.main(N.text, M.text, K.text, a.text, b.text, c.text, d.text);
-
-
-
-                        }, child: Text('Find')))
+                          calcs.main(N.text, M.text, K.text, a.text, b.text,
+                              c.text, d.text);
+                        },
+                        child: Text('Find')))
               ],
             )
           ],
@@ -255,51 +246,50 @@ class algorithm {
 }
 
 class Calcs {
-  void main(String N, String M, String K, String a, String b, String c, String d) {
+  void main(
+      String N, String M, String K, String a, String b, String c, String d) {
     int n = int.parse(N);
-    print(n);
     int m = int.parse(M);
-    print(m);
     int k = int.parse(K);
     int A = int.parse(a);
     int B = int.parse(b);
     int C = int.parse(c);
     int D = int.parse(d);
 
-
-
-
-    List<List<color>> arr =  [n][m] as List<List<color>>;
-    int leng = (n*m/k) as int;
+    List<List<color>> arr = [n][m] as List<List<color>>;
+    int leng = (n * m / k) as int;
     List<cache> arrCache = [leng] as List<cache>;
     algorithm alg1 = new algorithm();
     alg1.alg1(n, m, arr);
     bool search = false;
-    int hit = 0 ;
-    int miss =0;
-    for(int i = 0 ; i < leng ; i++){
-      if(arrCache[i].colorValue.c == a && arrCache[i].colorValue.m == b &&  arrCache[i].colorValue.y == c && arrCache[i].colorValue.k == d){
+    int hit = 0;
+    int miss = 0;
+    for (int i = 0; i < leng; i++) {
+      if (arrCache[i].colorValue.c == A &&
+          arrCache[i].colorValue.m == B &&
+          arrCache[i].colorValue.y == C &&
+          arrCache[i].colorValue.k == D) {
         hit++;
         search = true;
-
       }
     }
-    if(search == false){
+    if (search == false) {
       miss++;
-      for(int i = 0 ; i < n ; i++){
-        for(int j = 0 ; j < m ; j++){
-          if(arr[i][j].c == a  && arr[i][j].m == b  && arr[i][j].y == c  && arr[i][j].k == d){
-            arrCache[(i*m+j)%k].position == (i*m+j)/k;
-            arrCache[(i*m+j)%k].validation == true;
-            arrCache[(i*m+j)%k].colorValue == arr[i][j];
+      for (int i = 0; i < n; i++) {
+        for (int j = 0; j < m; j++) {
+          if (arr[i][j].c == A &&
+              arr[i][j].m == B &&
+              arr[i][j].y == C &&
+              arr[i][j].k == D) {
+            arrCache[(i * m + j) % k].position == (i * m + j) / k;
+            arrCache[(i * m + j) % k].validation == true;
+            arrCache[(i * m + j) % k].colorValue == arr[i][j];
           }
         }
       }
     }
     print(hit);
     print(miss);
-    print(hit/(hit+miss));
-
-
+    print(hit / (hit + miss));
   }
 }
