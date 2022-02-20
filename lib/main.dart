@@ -270,7 +270,36 @@ class Calcs {
 
 
     List<List<color>> arr =  [n][m] as List<List<color>>;
+    int leng = (n*m/k) as int;
+    List<cache> arrCache = [leng] as List<cache>;
+    algorithm alg1 = new algorithm();
+    alg1.alg1(n, m, arr);
+    bool search = false;
+    int hit = 0 ;
+    int miss =0;
+    for(int i = 0 ; i < leng ; i++){
+      if(arrCache[i].colorValue.c == a && arrCache[i].colorValue.m == b &&  arrCache[i].colorValue.y == c && arrCache[i].colorValue.k == d){
+        hit++;
+        search = true;
 
-    print(arr);
+      }
+    }
+    if(search == false){
+      miss++;
+      for(int i = 0 ; i < n ; i++){
+        for(int j = 0 ; j < m ; j++){
+          if(arr[i][j].c == a  && arr[i][j].m == b  && arr[i][j].y == c  && arr[i][j].k == d){
+            arrCache[(i*m+j)%k].position == (i*m+j)/k;
+            arrCache[(i*m+j)%k].validation == true;
+            arrCache[(i*m+j)%k].colorValue == arr[i][j];
+          }
+        }
+      }
+    }
+    print(hit);
+    print(miss);
+    print(hit/(hit+miss));
+
+
   }
 }
