@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 void main() {
@@ -194,33 +196,24 @@ class _MyHomePageState extends State<MyHomePage> {
 }
 
 class color {
-  late int c;
-  late int m;
-  late int y;
-  late int k;
+   int c = 0;
+   int m = 0;
+   int y = 0;
+   int k = 0;
+
+
 }
 
 class cache {
   late bool validation;
   late int position;
-  late color colorValue;
+   late color colorValue = color() ;
 }
 
-class algorithm {
-  void alg1(int N, int M, List<List<color>> memory) {
-    for (int i = 0; i < N; i++) {
-      for (int j = 0; j < M; j++) {
-        memory[i][j].c = 0;
-        memory[i][j].m = 0;
-        memory[i][j].y = 1;
-        memory[i][j].k = 0;
-      }
-    }
-  }
-
-  void alg2(int N, int M, List<List<color>> memory) {
-    for (int i = 0; i < N; i++) {
-      for (int j = 0; j < M; j++) {
+class Calcs {
+  void alg( int N , int M , List<List<color>> memory){
+    for(int i = 0; i < N; i++) {
+      for(int j = 0; j < M; j++) {
         memory[j][i].c = 0;
         memory[j][i].m = 0;
         memory[j][i].y = 1;
@@ -228,24 +221,6 @@ class algorithm {
       }
     }
   }
-
-  void alg3(int N, int M, List<List<color>> memory) {
-    for (int i = 0; i < N; i++) {
-      for (int j = 0; j < M; j++) {
-        memory[i][j].y = 1;
-      }
-    }
-    for (int i = 0; i < N; i++) {
-      for (int j = 0; j < M; j++) {
-        memory[i][j].c = 0;
-        memory[i][j].m = 0;
-        memory[i][j].k = 0;
-      }
-    }
-  }
-}
-
-class Calcs {
   void main(
       String N, String M, String K, String a, String b, String c, String d) {
     int n = int.parse(N);
@@ -255,12 +230,23 @@ class Calcs {
     int B = int.parse(b);
     int C = int.parse(c);
     int D = int.parse(d);
+    int leng = (n * m / k).round();
 
-    List<List<color>> arr = [n][m] as List<List<color>>;
-    int leng = (n * m / k) as int;
-    List<cache> arrCache = [leng] as List<cache>;
-    algorithm alg1 = new algorithm();
-    alg1.alg1(n, m, arr);
+    print((leng));
+
+    final arr =
+        List.generate(n, (y) => List.generate(m, (x) => color()));
+    final arrCache = List.generate(leng, (index) => cache());
+
+    alg(n, n, arr);
+    Random random = new Random();
+    for(int i =0 ; i < arrCache.length ; i++){
+      arrCache[i].colorValue.k = random.nextInt(2);
+      arrCache[i].colorValue.y = random.nextInt(2);
+      arrCache[i].colorValue.m = random.nextInt(2);
+      arrCache[i].colorValue.c = random.nextInt(2);
+    }
+
     bool search = false;
     int hit = 0;
     int miss = 0;
@@ -281,15 +267,20 @@ class Calcs {
               arr[i][j].m == B &&
               arr[i][j].y == C &&
               arr[i][j].k == D) {
-            arrCache[(i * m + j) % k].position == (i * m + j) / k;
-            arrCache[(i * m + j) % k].validation == true;
-            arrCache[(i * m + j) % k].colorValue == arr[i][j];
+            arrCache[(i * m + j) % k].position = ((i * m + j) / k).round();
+            arrCache[(i * m + j) % k].validation = true;
+            arrCache[(i * m + j) % k].colorValue = arr[i][j];
           }
         }
       }
     }
-    print(hit);
-    print(miss);
-    print(hit / (hit + miss));
+
+
+    for(int i = 0 ; i < arrCache.length; i++){
+      print(arrCache.length.toString() + " " + arrCache[i].colorValue.c.toString() + " " + arrCache[i].colorValue.m.toString() + " " + arrCache[i].colorValue.y.toString() + " " + arrCache[i].colorValue.k.toString() + " " + (i++).toString());
+    }
+    print("hit " + hit.toString());
+    print("miss " + miss.toString());
+    print("ratio : " + (hit / (hit + miss)).toString());
   }
 }
